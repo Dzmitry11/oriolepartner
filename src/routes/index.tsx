@@ -1,24 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LangProvider } from "@/components/site/LangProvider";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { ServiceCards } from "@/components/site/ServiceCards";
+import {
+  LicenceSection,
+  TaxiSection,
+  RentSection,
+  AboutSection,
+} from "@/components/site/Sections";
+import { Gallery } from "@/components/site/Gallery";
+import { LeadForm } from "@/components/site/LeadForm";
+import { Contacts, Footer, FloatingButtons } from "@/components/site/Contacts";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      {
+        title: "Oriole Partner — замена прав, такси и аренда авто в Варшаве",
+      },
+      {
+        name: "description",
+        content:
+          "Замена иностранных водительских прав, подключение к Uber, Bolt и FreeNow, аренда подготовленных гибридных Toyota в Варшаве.",
+      },
+      {
+        property: "og:title",
+        content: "Oriole Partner — работа в такси в Варшаве",
+      },
+      {
+        property: "og:description",
+        content:
+          "Замена прав без ожидания 185 дней, подключение к Uber, Bolt, FreeNow и аренда автомобилей для такси.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <LangProvider>
+      <Header />
+      <main>
+        <Hero />
+        <ServiceCards />
+        <LicenceSection />
+        <TaxiSection />
+        <RentSection />
+        <Gallery />
+        <AboutSection />
+        <LeadForm />
+        <Contacts />
+      </main>
+      <Footer />
+      <FloatingButtons />
+    </LangProvider>
   );
 }
