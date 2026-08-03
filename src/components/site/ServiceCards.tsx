@@ -15,7 +15,7 @@ export function ServiceCards() {
       <div className="mx-auto mt-4 gold-rule" />
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         {t.cards.items.map((c, i) => {
-          const Icon = icons[i];
+          const Icon = icons[i % icons.length]!;
           return (
             <article
               key={c.title}
