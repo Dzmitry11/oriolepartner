@@ -78,7 +78,7 @@ export function Header() {
           </div>
 
           <a
-            href={site.phoneHref}
+            href={telHref(site.phone)}
             className="hidden items-center gap-2 text-sm text-foreground transition-colors hover:text-primary md:flex"
           >
             <Phone className="size-4" />
@@ -115,7 +115,7 @@ export function Header() {
                 {l.label}
               </a>
             ))}
-            <a href={site.phoneHref} className="py-3 text-sm text-primary">
+            <a href={telHref(site.phone)} className="py-3 text-sm text-primary">
               {site.phone}
             </a>
             <Button
