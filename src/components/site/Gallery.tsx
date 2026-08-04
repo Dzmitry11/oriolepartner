@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useLang } from "./LangProvider";
+import { useCarPhotos } from "@/hooks/useSiteData";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export function Gallery() {
   const { t } = useLang();
-  // Реальные фотографии автопарка добавляются здесь (от 3 до 6 шт.)
-  const photos: { src: string; alt: string }[] = [];
+  const { data } = useCarPhotos();
+  const photos = data ?? [];
   const [active, setActive] = useState<string | null>(null);
 
   return (
@@ -18,13 +19,13 @@ export function Gallery() {
           {photos.length > 0
             ? photos.map((p) => (
                 <button
-                  key={p.src}
-                  onClick={() => setActive(p.src)}
+                  key={p.id}
+                  onClick={() => setActive(p.url)}
                   className="overflow-hidden rounded-xl border border-border"
                 >
                   <img
-                    src={p.src}
-                    alt={p.alt}
+                    src={p.url}
+                    alt={p.title || "Oriole Partner"}
                     loading="lazy"
                     className="aspect-[4/3] w-full object-cover transition-transform duration-500 hover:scale-105"
                   />

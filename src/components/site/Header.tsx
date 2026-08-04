@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { useLang } from "./LangProvider";
 import { requestConsultation } from "./lead";
-import { site } from "@/content/site";
+import { useSiteSettings, telHref } from "@/hooks/useSiteData";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/oriole-hero.png.asset.json";
 
 export function Header() {
   const { t, lang, setLang } = useLang();
+  const site = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -76,7 +78,7 @@ export function Header() {
           </div>
 
           <a
-            href={site.phoneHref}
+            href={telHref(site.phone)}
             className="hidden items-center gap-2 text-sm text-foreground transition-colors hover:text-primary md:flex"
           >
             <Phone className="size-4" />
@@ -113,7 +115,7 @@ export function Header() {
                 {l.label}
               </a>
             ))}
-            <a href={site.phoneHref} className="py-3 text-sm text-primary">
+            <a href={telHref(site.phone)} className="py-3 text-sm text-primary">
               {site.phone}
             </a>
             <Button

@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { useLang } from "./LangProvider";
 import { LEAD_EVENT } from "./lead";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +17,7 @@ import {
 } from "@/components/ui/select";
 
 export function LeadForm() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [service, setService] = useState<string>("");
   const [way, setWay] = useState<string>("");
   const [name, setName] = useState("");
@@ -25,6 +26,7 @@ export function LeadForm() {
   const [consent, setConsent] = useState(false);
   const [honey, setHoney] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export function LeadForm() {
     return () => window.removeEventListener(LEAD_EVENT, handler);
   }, []);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (honey) return; // защита от спама
     if (!name.trim() || !phone.trim() || !consent) {
@@ -44,6 +46,20 @@ export function LeadForm() {
       return;
     }
     setError("");
+    setSending(true);
+    const { error: dbError } = await supabase.from("leads").insert({
+      name: name.trim().slice(0, 100),
+      phone: phone.trim().slice(0, 40),
+      service: service.slice(0, 120),
+      contact_way: way.slice(0, 60),
+      comment: comment.trim().slice(0, 1000),
+      lang,
+    });
+    setSending(false);
+    if (dbError) {
+      setError(t.form.required);
+      return;
+    }
     setSent(true);
   };
 
@@ -82,6 +98,7 @@ export function LeadForm() {
               <Input
                 id="name"
                 value={name}
+                maxLength={100}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
@@ -92,6 +109,7 @@ export function LeadForm() {
                 id="phone"
                 type="tel"
                 value={phone}
+                maxLength={40}
                 onChange={(e) => setPhone(e.target.value)}
                 required
               />
@@ -133,6 +151,7 @@ export function LeadForm() {
             <Textarea
               id="comment"
               rows={3}
+              maxLength={1000}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
             />
@@ -149,7 +168,7 @@ export function LeadForm() {
 
           {error && <p className="text-sm text-destructive">{error}</p>}
 
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" disabled={sending}>
             {t.form.submit}
           </Button>
         </form>

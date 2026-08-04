@@ -1,10 +1,12 @@
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useLang } from "./LangProvider";
-import { site } from "@/content/site";
+import { useSiteSettings, telHref } from "@/hooks/useSiteData";
 import logo from "@/assets/oriole-hero.png.asset.json";
 
 export function Contacts() {
   const { t } = useLang();
+  const s = useSiteSettings();
   return (
     <section id="contacts" className="border-t border-border bg-surface/40">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
@@ -17,19 +19,19 @@ export function Contacts() {
 
         <div className="mt-10 grid gap-8 lg:grid-cols-2">
           <div className="grid gap-4">
-            <a href={site.phoneHref} className="panel flex items-center gap-4 p-5">
+            <a href={telHref(s.phone)} className="panel flex items-center gap-4 p-5">
               <Phone className="size-5 text-primary" />
               <span>
                 <span className="block text-xs text-muted-foreground">
                   {t.contacts.phone}
                 </span>
-                {site.phone}
+                {s.phone}
               </span>
             </a>
 
             <div className="grid gap-4 sm:grid-cols-3">
               <a
-                href={site.whatsapp}
+                href={s.whatsapp}
                 target="_blank"
                 rel="noreferrer"
                 className="panel flex items-center gap-3 p-4 text-sm"
@@ -37,7 +39,7 @@ export function Contacts() {
                 <MessageCircle className="size-5 text-primary" /> WhatsApp
               </a>
               <a
-                href={site.telegram}
+                href={s.telegram}
                 target="_blank"
                 rel="noreferrer"
                 className="panel flex items-center gap-3 p-4 text-sm"
@@ -45,20 +47,20 @@ export function Contacts() {
                 <Send className="size-5 text-primary" /> Telegram
               </a>
               <a
-                href={site.viber}
+                href={s.viber}
                 className="panel flex items-center gap-3 p-4 text-sm"
               >
                 <MessageCircle className="size-5 text-primary" /> Viber
               </a>
             </div>
 
-            <a href={`mailto:${site.email}`} className="panel flex items-center gap-4 p-5">
+            <a href={`mailto:${s.email}`} className="panel flex items-center gap-4 p-5">
               <Mail className="size-5 text-primary" />
               <span>
                 <span className="block text-xs text-muted-foreground">
                   {t.contacts.email}
                 </span>
-                {site.email}
+                {s.email}
               </span>
             </a>
 
@@ -68,7 +70,7 @@ export function Contacts() {
                 <span className="block text-xs text-muted-foreground">
                   {t.contacts.address}
                 </span>
-                {site.address}
+                {s.address}
               </span>
             </div>
 
@@ -78,7 +80,7 @@ export function Contacts() {
                 <span className="block text-xs text-muted-foreground">
                   {t.contacts.hours}
                 </span>
-                {t.contacts.hoursValue}
+                {s.hours || t.contacts.hoursValue}
               </span>
             </div>
 
@@ -86,22 +88,31 @@ export function Contacts() {
               <p className="mb-3 font-display text-lg text-foreground">
                 {t.contacts.requisites}
               </p>
-              <p>{site.fullName}</p>
-              <p className="mt-1">KRS: {site.krs}</p>
-              <p>NIP: {site.nip}</p>
-              <p>REGON: {site.regon}</p>
+              <p>{s.full_name}</p>
+              <p className="mt-1">KRS: {s.krs}</p>
+              <p>NIP: {s.nip}</p>
+              <p>REGON: {s.regon}</p>
             </div>
           </div>
 
           <div className="overflow-hidden rounded-xl border border-border">
             <iframe
               title="Oriole Partner — карта"
-              src={site.mapEmbed}
+              src={s.map_embed}
               loading="lazy"
               className="size-full min-h-[420px] w-full"
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+        </div>
+
+        <div className="mt-6 text-right">
+          <Link
+            to="/admin"
+            className="text-[11px] lowercase tracking-wide text-muted-foreground/40 transition-colors hover:text-primary"
+          >
+            admin
+          </Link>
         </div>
       </div>
     </section>
@@ -110,6 +121,7 @@ export function Contacts() {
 
 export function Footer() {
   const { t } = useLang();
+  const s = useSiteSettings();
   return (
     <footer className="border-t border-border py-12">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-3">
@@ -124,19 +136,19 @@ export function Footer() {
               ORIOLE PARTNER
             </span>
           </div>
-          <p className="mt-4 text-sm text-muted-foreground">{site.shortName}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{s.short_name}</p>
         </div>
 
         <div className="space-y-1.5 text-sm text-muted-foreground">
-          <a href={site.phoneHref} className="block hover:text-primary">
-            {site.phone}
+          <a href={telHref(s.phone)} className="block hover:text-primary">
+            {s.phone}
           </a>
-          <a href={`mailto:${site.email}`} className="block hover:text-primary">
-            {site.email}
+          <a href={`mailto:${s.email}`} className="block hover:text-primary">
+            {s.email}
           </a>
-          <p>{site.address}</p>
-          <p>NIP: {site.nip}</p>
-          <p>KRS: {site.krs}</p>
+          <p>{s.address}</p>
+          <p>NIP: {s.nip}</p>
+          <p>KRS: {s.krs}</p>
         </div>
 
         <div className="space-y-1.5 text-sm text-muted-foreground">
@@ -150,7 +162,7 @@ export function Footer() {
             {t.footer.cookies}
           </a>
           <p className="pt-3">
-            © {new Date().getFullYear()} {site.shortName}. {t.footer.rights}.
+            © {new Date().getFullYear()} {s.short_name}. {t.footer.rights}.
           </p>
         </div>
       </div>
@@ -159,17 +171,18 @@ export function Footer() {
 }
 
 export function FloatingButtons() {
+  const s = useSiteSettings();
   return (
     <div className="fixed bottom-5 right-4 z-40 flex flex-col gap-3">
       <a
-        href={site.phoneHref}
+        href={telHref(s.phone)}
         aria-label="Phone"
         className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-gold transition-transform hover:scale-105"
       >
         <Phone className="size-5" />
       </a>
       <a
-        href={site.whatsapp}
+        href={s.whatsapp}
         target="_blank"
         rel="noreferrer"
         aria-label="WhatsApp"
@@ -178,7 +191,7 @@ export function FloatingButtons() {
         <MessageCircle className="size-5" />
       </a>
       <a
-        href={site.telegram}
+        href={s.telegram}
         target="_blank"
         rel="noreferrer"
         aria-label="Telegram"
