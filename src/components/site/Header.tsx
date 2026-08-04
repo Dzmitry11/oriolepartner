@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { useLang } from "./LangProvider";
 import { requestConsultation } from "./lead";
-import { site } from "@/content/site";
+import { useSiteSettings, telHref } from "@/hooks/useSiteData";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/oriole-hero.png.asset.json";
 
 export function Header() {
   const { t, lang, setLang } = useLang();
+  const site = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
