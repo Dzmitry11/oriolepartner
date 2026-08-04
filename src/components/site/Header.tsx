@@ -60,7 +60,7 @@ export function Header() {
 
         <div className="ml-auto flex items-center gap-2 lg:ml-0">
           <div className="flex items-center rounded-md border border-border text-xs">
-            {(["ru", "ua"] as const).map((l) => (
+            {(["ru", "ua", "pl"] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
