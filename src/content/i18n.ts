@@ -1,4 +1,4 @@
-export type Lang = "ru" | "ua";
+export type Lang = "ru" | "ua" | "pl";
 
 export const dict = {
   ru: {
