@@ -11,7 +11,7 @@
     "dev:ssr": "vite dev --ssr",
     "build:client": "vite build && npm run generate:sitemap",
     "build:server": "nitro build",
-    "build": "npm run build:client && mkdir -p .vercel/output/static && cp -R dist/* .vercel/output/static/ && cp dist/index.html index.html && npm run build:server",
+    "build": "npm run build:client && mkdir -p .vercel/output/static && cp -R dist/* .vercel/output/static/ && cp dist/index.html index.html && npm run build:server && echo '--- .vercel/output/static listing ---' && ls -la .vercel/output/static || true",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "generate:sitemap": "node scripts/generate-sitemap.cjs",
