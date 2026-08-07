@@ -3,7 +3,9 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite dev",
     "dev:ssr": "vite dev --ssr",
@@ -12,7 +14,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:sitemap": "node scripts/generate-sitemap.cjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

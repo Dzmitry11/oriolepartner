@@ -1,5 +1,3 @@
-import { defineNitroConfig } from 'nitropack'
-
-export default defineNitroConfig({
-  preset: 'vercel',
-})
+export default {
+ preset: 'vercel',
+}
