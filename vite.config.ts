@@ -1,14 +1,7 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { resolve } from 'path';
+import { defineConfig } from '@lovable.dev/vite-tanstack-config';
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
-  resolve: {
-    alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
-  },
-  server: {
-    port: 5173,
+  tanstackStart: {
+    server: { entry: 'server' },
   },
 });
