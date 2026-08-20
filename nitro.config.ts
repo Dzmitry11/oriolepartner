@@ -12,6 +12,10 @@ export default {
       dir: join(__dirname, 'public'),
       baseURL: '/',
     },
+    {
+      dir: join(__dirname, 'dist/client/assets'),
+      baseURL: '/assets',
+    },
   ],
   rollupConfig: {
     input: join(__dirname, 'dist/server/server.js'),
