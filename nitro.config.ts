@@ -9,7 +9,7 @@ export default {
   serverDir: join(__dirname, 'dist/server'),
   publicAssets: [
     {
-      dir: 'dist/client',
+      dir: join(__dirname, 'public'),
       baseURL: '/',
     },
   ],
