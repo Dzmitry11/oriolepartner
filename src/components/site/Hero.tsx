@@ -3,7 +3,7 @@ import { useLang } from "./LangProvider";
 import { requestConsultation } from "./lead";
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
-import hero from "@/assets/oriole-hero.png.asset.json";
+const hero = "/oriole-hero.png";
 
 export function Hero() {
   const { t } = useLang();
@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section id="top" className="relative min-h-[100svh] overflow-hidden">
       <img
-        src={hero.url}
+        src={hero}
         alt="Oriole Partner — ночная Варшава"
         className="absolute inset-0 size-full object-cover"
         fetchPriority="high"
