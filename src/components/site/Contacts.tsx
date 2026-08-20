@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useLang } from "./LangProvider";
 import { useSiteSettings, telHref } from "@/hooks/useSiteData";
-import logo from "@/assets/oriole-hero.png.asset.json";
+const logoUrl = "/oriole-logo.webp";
 
 export function Contacts() {
   const { t } = useLang();
@@ -128,7 +128,7 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-3">
             <img
-              src={logo.url}
+              src={logoUrl}
               alt="Oriole Partner"
               className="size-10 rounded-full object-cover ring-1 ring-border"
             />

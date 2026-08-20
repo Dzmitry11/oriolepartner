@@ -4,7 +4,7 @@ import { useLang } from "./LangProvider";
 import { requestConsultation } from "./lead";
 import { useSiteSettings, telHref } from "@/hooks/useSiteData";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/oriole-hero.png.asset.json";
+const logoUrl = "/oriole-logo.webp";
 
 export function Header() {
   const { t, lang, setLang } = useLang();
@@ -39,7 +39,7 @@ export function Header() {
       <div className="mx-auto flex h-20 max-w-7xl items-center gap-4 px-4 sm:px-6">
         <a href="#top" className="flex shrink-0 items-center gap-3">
           <img
-            src={logo.url}
+            src={logoUrl}
             alt="Oriole Partner"
             className="h-11 w-11 rounded-full object-cover ring-1 ring-border"
           />
